@@ -1,4 +1,3 @@
-
 import { useState } from "react";
 import { 
   CreditCard, 
@@ -32,7 +31,6 @@ import {
 import { Progress } from "@/components/ui/progress";
 import { Switch } from "@/components/ui/switch";
 
-// Sample billing data
 const subscriptionPlans = [
   {
     id: 1,
@@ -142,7 +140,6 @@ const Billing = () => {
   const [showAddCard, setShowAddCard] = useState(false);
   const [yearlyBilling, setYearlyBilling] = useState(false);
 
-  // Current subscription info
   const currentPlan = subscriptionPlans[1]; // Professional
   const messageUsage = 3245;
   const messageLimit = 5000;
@@ -152,7 +149,7 @@ const Billing = () => {
   const getRemainingDays = () => {
     const today = new Date();
     const renewal = new Date("2023-06-01");
-    const diffTime = Math.abs(renewal - today);
+    const diffTime = Math.abs(renewal.getTime() - today.getTime());
     const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
     return diffDays;
   };
@@ -206,8 +203,10 @@ const Billing = () => {
                       <Badge className="bg-green-100 text-green-800">Active</Badge>
                     </div>
                     <div className="flex items-end gap-1">
-                      <span className="text-2xl font-bold">${currentPlan.price}</span>
-                      <span className="text-muted-foreground">/{currentPlan.period}</span>
+                      <span className="text-2xl font-bold">${yearlyBilling 
+                          ? Math.round((currentPlan.price * 0.8 * 12)) 
+                          : currentPlan.price}</span>
+                      <span className="text-muted-foreground">/{yearlyBilling ? "year" : "month"}</span>
                     </div>
                   </div>
 
@@ -277,7 +276,9 @@ const Billing = () => {
                           <h3 className="font-medium">{plan.name}</h3>
                           <div className="flex items-baseline mt-1">
                             <span className="text-2xl font-bold">
-                              ${yearlyBilling ? (plan.price * 0.8 * 12).toFixed(0) : plan.price}
+                              ${yearlyBilling 
+                                ? Math.round((plan.price * 0.8 * 12)) 
+                                : plan.price}
                             </span>
                             <span className="text-muted-foreground ml-1">
                               /{yearlyBilling ? "year" : "month"}

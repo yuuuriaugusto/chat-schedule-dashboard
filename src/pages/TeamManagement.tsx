@@ -239,7 +239,7 @@ const TeamManagement = () => {
                       </TableCell>
                       <TableCell className="hidden md:table-cell">{member.department}</TableCell>
                       <TableCell className="hidden md:table-cell">
-                        <Badge variant={member.status === "active" ? "success" : "secondary"} className={
+                        <Badge variant={member.status === "active" ? "default" : "secondary"} className={
                           member.status === "active" ? "bg-green-100 text-green-800" : "bg-gray-100 text-gray-800"
                         }>
                           {member.status === "active" ? "Active" : "Inactive"}
